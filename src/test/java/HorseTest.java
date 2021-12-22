@@ -18,25 +18,6 @@ class HorseTest {
         assertEquals(expectedValue, horse.getColor());
     }
 
-    @Test
-    void canMoveToPosition() {
-        ChessBoard chessBoard = new ChessBoard("Player1");
-        Horse horse = new Horse("White");
-        assertTrue(horse.canMoveToPosition(chessBoard,1,1,2,3), "Horse can move");
-    }
-
-    @Test
-    void movetOutboard() {
-        ChessBoard chessBoard = new ChessBoard("Player1");
-        Horse horse = new Horse("White");
-        assertFalse(horse.canMoveToPosition(chessBoard,-1,1,2,3), "start line -1");
-        assertFalse(horse.canMoveToPosition(chessBoard,1,-1,2,3), "start column -1");
-        assertFalse(horse.canMoveToPosition(chessBoard,1,1,-1,2), "end line -1");
-        assertFalse(horse.canMoveToPosition(chessBoard,1,1,2,-1), "end column -1");
-
-        assertFalse(horse.canMoveToPosition(chessBoard,7,7,8,5), "end line 8");
-        assertFalse(horse.canMoveToPosition(chessBoard,7,7,5,8), "end column 8");
-    }
 
     @Test
     void moveTheSameColor() {
