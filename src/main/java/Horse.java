@@ -4,6 +4,11 @@ public class Horse extends ChessPiece {
     }
 
     @Override
+    public String getSymbol() {
+        return "H";
+    }
+
+    @Override
     public boolean canMoveToPosition(
             ChessBoard chessBoard
             , int startLine
@@ -30,9 +35,5 @@ public class Horse extends ChessPiece {
                 endLine == startLine + 2 && endColumn == startColumn - 1;
     }
 
-
-    @Override
-    public String getSymbol() {
-        return "H";
-    }
 }
+
