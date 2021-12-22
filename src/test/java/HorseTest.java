@@ -5,6 +5,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class HorseTest {
 
     @Test
+    void getSymbol() {
+        Horse horse = new Horse("White");
+        assertEquals(horse.getSymbol(),"H");
+    }
+
+    @Test
     void getColorWhite() {
         Horse horse = new Horse("White");
         String expectedValue = "White";
@@ -42,10 +48,6 @@ class HorseTest {
         assertFalse(horse.canMoveToPosition(chessBoard,5,6,6,3), "End positon incorrect");
     }
 
-    @Test
-    void getSymbol() {
-        Horse horse = new Horse("White");
-        assertEquals(horse.getSymbol(),"H");
-    }
+
 
 }
