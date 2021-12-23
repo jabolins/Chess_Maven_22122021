@@ -34,7 +34,6 @@ public class Bishop extends ChessPiece{
 
     private boolean areFieldsFree(int startLine, int startColumn, int endLine, int endColumn, ChessBoard chessBoard) {
         int countOfSteps = Math.abs(endLine - startLine);
-
         int lineStep= (endLine-startLine)/countOfSteps;
         int columnStep=(endColumn-startColumn)/countOfSteps;
         int currentLine=startLine;
