@@ -1,12 +1,12 @@
-public class Bishop extends ChessPiece{
+public class Rook extends ChessPiece {
 
-    public Bishop(String color) {
+    public Rook(String color) {
         super(color);
     }
 
     @Override
     public String getSymbol() {
-        return "B";
+        return "R";
     }
 
     @Override
@@ -14,31 +14,30 @@ public class Bishop extends ChessPiece{
         if (!isStartEndDifferent(startLine, startColumn, endLine, endColumn)) return false;
         if (!isMoveInsideBoard(startLine, startColumn, endLine, endColumn)) return false;
         if (isMoveEndSameColor(endLine, endColumn, chessBoard)) return false;
-        if (canMoveAsBishop(startLine, startColumn, endLine, endColumn,chessBoard)) return true;
+        if (canMoveAsRook(startLine, startColumn, endLine, endColumn,chessBoard)) return true;
         return false;
     }
 
-    private boolean canMoveAsBishop(int startLine, int startColumn, int endLine, int endColumn, ChessBoard chessBoard) {
+    private boolean canMoveAsRook(int startLine, int startColumn, int endLine, int endColumn, ChessBoard chessBoard) {
 
-        if (!isMoveDiagonal(startLine, startColumn, endLine, endColumn)) return false;
+        if (!isMoveStrightLine(startLine, startColumn, endLine, endColumn)) return false;
         if (!areFieldsFree(startLine, startColumn, endLine, endColumn, chessBoard)) return false;
         return true;
     }
 
-    private boolean isMoveDiagonal(int startLine, int startColumn, int endLine, int endColumn) {
-        if (Math.abs(endLine - startLine)== Math.abs(endColumn - startColumn)){
+    private boolean isMoveStrightLine(int startLine, int startColumn, int endLine, int endColumn) {
+        if( startLine == endLine || startColumn == endColumn){
             return true;
         }
         return false;
     }
 
     private boolean areFieldsFree(int startLine, int startColumn, int endLine, int endColumn, ChessBoard chessBoard) {
-        int countOfSteps = Math.abs(endLine - startLine);
-
-        int lineStep= (endLine-startLine)/countOfSteps;
-        int columnStep=(endColumn-startColumn)/countOfSteps;
-        int currentLine=startLine;
-        int currentColumn=startColumn;
+        int countOfSteps = Math.abs((endLine - startLine) + (endColumn - startColumn));
+        int lineStep= (endLine - startLine)/countOfSteps;
+        int columnStep=(endColumn - startColumn)/countOfSteps;
+        int currentLine= startLine;
+        int currentColumn= startColumn;
 
         for (int i = 0; i < countOfSteps-1; i++) {
             currentLine+=lineStep;
