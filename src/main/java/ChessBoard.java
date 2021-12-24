@@ -1,4 +1,5 @@
 public class ChessBoard {
+
     public ChessPiece[][] board = new ChessPiece[8][8]; // creating a field for game
     String nowPlayer;
 
@@ -23,6 +24,9 @@ public class ChessBoard {
                     , endColumn)) {
                 board[endLine][endColumn] = board[startLine][startColumn]; // if piece can move, we moved a piece
                 board[startLine][startColumn] = null; // set null to previous cell
+                if (board[endLine][endColumn].getSymbol().equals("K") || board[endLine][endColumn].getSymbol().equals("R")) {
+                    board[endLine][endColumn].check = false; // change check to false for King or Rook if they move
+                }
                 this.nowPlayer = this.nowPlayerColor().equals("White") ? "Black" : "White";
 
                 return true;
@@ -54,5 +58,81 @@ public class ChessBoard {
 
     public boolean checkPos(int pos) {
         return pos >= 0 && pos <= 7;
+    }
+
+    public boolean castling0() {
+        if (nowPlayer.equals("White")) {
+            if (board[0][0] == null || board[0][4] == null) return false;
+            if (board[0][0].getSymbol().equals("R") && board[0][4].getSymbol().equals("K") && // check that King and Rook
+                    board[0][1] == null && board[0][2] == null && board[0][3] == null) {              // never moved
+                if (board[0][0].getColor().equals("White") && board[0][4].getColor().equals("White") &&
+                        board[0][0].check && board[0][4].check &&
+                        !new King("White").isUnderAttack(this, 0, 2)) { // check that position not in under attack
+                    board[0][4] = null;
+                    board[0][2] = new King("White");   // move King
+                    board[0][2].check = false;
+                    board[0][0] = null;
+                    board[0][3] = new Rook("White");   // move Rook
+                    board[0][3].check = false;
+                    nowPlayer = "Black";  // next turn
+                    return true;
+                } else return false;
+            } else return false;
+        } else {
+            if (board[7][0] == null || board[7][4] == null) return false;
+            if (board[7][0].getSymbol().equals("R") && board[7][4].getSymbol().equals("K") && // check that King and Rook
+                    board[7][1] == null && board[7][2] == null && board[7][3] == null) {              // never moved
+                if (board[7][0].getColor().equals("Black") && board[7][4].getColor().equals("Black") &&
+                        board[7][0].check && board[7][4].check &&
+                        !new King("Black").isUnderAttack(this, 7, 2)) { // check that position not in under attack
+                    board[7][4] = null;
+                    board[7][2] = new King("Black");   // move King
+                    board[7][2].check = false;
+                    board[7][0] = null;
+                    board[7][3] = new Rook("Black");   // move Rook
+                    board[7][3].check = false;
+                    nowPlayer = "White";  // next turn
+                    return true;
+                } else return false;
+            } else return false;
+        }
+    }
+
+    public boolean castling7() {
+        if (nowPlayer.equals("White")) {
+            if (board[0][7] == null || board[0][4] == null) return false;
+            if (board[0][7].getSymbol().equals("R") && board[0][4].getSymbol().equals("K") && // check that King and Rook
+                    board[0][5] == null && board[0][6] == null) {              // never moved
+                if (board[0][7].getColor().equals("White") && board[0][4].getColor().equals("White") &&
+                        board[0][7].check && board[0][4].check &&
+                        !new King("White").isUnderAttack(this, 0, 6)) { // check that position not in under attack
+                    board[0][4] = null;
+                    board[0][6] = new King("White");   // move King
+                    board[0][6].check = false;
+                    board[0][7] = null;
+                    board[0][5] = new Rook("White");   // move Rook
+                    board[0][5].check = false;
+                    nowPlayer = "Black";  // next turn
+                    return true;
+                } else return false;
+            } else return false;
+        } else {
+            if (board[7][7] == null || board[7][4] == null) return false;
+            if (board[7][7].getSymbol().equals("R") && board[7][4].getSymbol().equals("K") && // check that King and Rook
+                    board[7][5] == null && board[7][6] == null) {              // never moved
+                if (board[7][7].getColor().equals("Black") && board[7][4].getColor().equals("Black") &&
+                        board[7][7].check && board[7][4].check &&
+                        !new King("Black").isUnderAttack(this, 7, 6)) { // check that position not in under attack
+                    board[7][4] = null;
+                    board[7][6] = new King("Black");   // move King
+                    board[7][6].check = false;
+                    board[7][7] = null;
+                    board[7][5] = new Rook("Black");   // move Rook
+                    board[7][5].check = false;
+                    nowPlayer = "White";  // next turn
+                    return true;
+                } else return false;
+            } else return false;
+        }
     }
 }
